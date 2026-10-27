@@ -3,22 +3,104 @@
 #include <string>
 using namespace std;
 
-string scene1(double emergencyScore) {
-    if (emergencyScore >= 80) {
-        return "CRITICAL";
+void scene1(double emergencyScore)
+{
+    string emergencyLevel;
+
+    if (emergencyScore >= 80)
+    {
+        emergencyLevel = "CRITICAL";
     }
-    else if (emergencyScore >= 60) {
-        return "HIGH";
+    else if (emergencyScore >= 60)
+    {
+        emergencyLevel = "HIGH";
     }
-    else if (emergencyScore >= 40) {
-        return "MEDIUM";
+    else if (emergencyScore >= 40)
+    {
+        emergencyLevel = "MEDIUM";
     }
-    else {
-        return "LOW";
+    else
+    {
+        emergencyLevel = "LOW";
+    }
+
+    cout << "[Scene 1] Emergency: " << emergencyLevel
+         << " (score = " << fixed << setprecision(1)
+         << emergencyScore << ")\n";
+}
+
+void support(int dinoCount, int rexAvailable,
+             int lavaNearby, int marshallReady,
+             const string & mainPup)
+{
+    string result = "";
+
+    if (lavaNearby == 1 && marshallReady == 1
+        && mainPup != "Marshall")
+    {
+        result = "Marshall";
+    }
+
+    if (dinoCount >= 10 && rexAvailable == 1
+        && mainPup != "Rex")
+    {
+        if (!result.empty())
+        {
+            result += ", ";
+        }
+
+        result += "Rex";
+    }
+
+    if (!result.empty())
+    {
+        cout << "Support: " << result << '\n';
     }
 }
 
-int main() {
+void scene2(char terrainType, int dinoCount,
+            int rexAvailable, int lavaNearby,
+            int marshallReady)
+{
+    string mainPup;
+
+    if (terrainType == 'F')
+    {
+        mainPup = "Chase";
+    }
+    else if (terrainType == 'M')
+    {
+        mainPup = "Rubble";
+    }
+    else if (terrainType == 'W')
+    {
+        mainPup = "Zuma";
+    }
+    else if (terrainType == 'V')
+    {
+        if (marshallReady == 1)
+        {
+            mainPup = "Marshall";
+        }
+        else
+        {
+            mainPup = "Skye";
+        }
+    }
+    else
+    {
+        cout << "Invalid terrain\n";
+        return;
+    }
+
+    cout << "[Scene 2] Main Pup: " << mainPup << '\n';
+
+    support(dinoCount, rexAvailable,
+            lavaNearby, marshallReady, mainPup);
+}
+
+int main()
+{
     int dinoCount, dangerLevel, vehicleEnergy;
     int roadBlocked, lavaNearby, rexAvailable;
     int marshallReady, rescueEquipment, specialRescueReady;
@@ -35,9 +117,12 @@ int main() {
                           + temperature * 0.2
                           + rescueDistance * 2;
 
-    cout << "[Scene 1] Emergency: " << scene1(emergencyScore)
-         << " (score = " << fixed << setprecision(1)
-         << emergencyScore << ")" << endl;
+    // Scene 1
+    scene1(emergencyScore);
+
+    // Scene 2
+    scene2(terrainType, dinoCount, rexAvailable,
+           lavaNearby, marshallReady);
 
     return 0;
 }
