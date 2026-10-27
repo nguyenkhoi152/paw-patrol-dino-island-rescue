@@ -38,7 +38,7 @@ void support(int dinoCount, int rexAvailable,
     if (lavaNearby == 1 && marshallReady == 1
         && mainPup != "Marshall")
     {
-        result = "Marshall";
+        result = "Support: Marshall";
     }
 
     if (dinoCount >= 10 && rexAvailable == 1
@@ -46,15 +46,15 @@ void support(int dinoCount, int rexAvailable,
     {
         if (!result.empty())
         {
-            result += ", ";
+            result += "\n";
         }
 
-        result += "Rex";
+        result += "Support: Rex";
     }
 
     if (!result.empty())
     {
-        cout << "Support: " << result << '\n';
+        cout << result << '\n';
     }
 }
 
@@ -139,7 +139,7 @@ void scene3(int rexAvailable, int marshallReady,
     }
     else
     {
-        status = " NOT READY";
+        status = "NOT READY";
     }
     cout << "[Scene 3] Rescue Power: " << fixed << setprecision(1) << rescuePower << " - " << status << '\n';
 }
