@@ -98,7 +98,51 @@ void scene2(char terrainType, int dinoCount,
     support(dinoCount, rexAvailable,
             lavaNearby, marshallReady, mainPup);
 }
+void scene3(int rexAvailable, int marshallReady, 
+    int lavaNearby, int roadBlocked, char terrainType, 
+    double rescuePower, int vehicleEnergy, int rescueEquipment, int dinoCount)
 
+{
+    rescuePower = vehicleEnergy * 0.4 + rescueEquipment * 0.4;
+    if (rexAvailable==1 && dinoCount >= 10)
+        {
+            rescuePower += 10;
+        }
+    if (marshallReady==1 && lavaNearby==1)
+        {
+            rescuePower += 10;
+        }
+    if (roadBlocked==1)
+    {
+        rescuePower -=15;
+    }
+    if (terrainType == 'M')
+    {
+        rescuePower -= 5;
+    }
+    if (terrainType == 'V')
+    {
+        rescuePower -= 10;
+    }
+    string status;
+    if (rescuePower >= 70)
+    {
+        status = "STRONG";
+    }
+    else if (rescuePower >= 50 && rescuePower < 70)
+    {
+        status = "READY";
+    }
+    else if (rescuePower >= 30 && rescuePower < 50)
+    {
+        status = "RISKY";
+    }
+    else
+    {
+        status = " NOT READY";
+    }
+    cout << "[Scene 3] Rescue Power: " << fixed << setprecision(1) << rescuePower << " - " << status << '\n';
+}
 int main()
 {
     int dinoCount, dangerLevel, vehicleEnergy;
@@ -123,6 +167,7 @@ int main()
     // Scene 2
     scene2(terrainType, dinoCount, rexAvailable,
            lavaNearby, marshallReady);
-
+    // Scene 3
+    scene3(rexAvailable, marshallReady, lavaNearby, roadBlocked, terrainType, 0.0, vehicleEnergy, rescueEquipment, dinoCount);
     return 0;
 }
